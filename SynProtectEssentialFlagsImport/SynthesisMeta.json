@@ -1,0 +1,9 @@
+{
+  "Nickname": "SynProtectEssentialFlagsImport-local",
+  "Visibility": "Visible",
+  "OneLineDescription": "Import Essential/Protected flags for npc if it was overwrited",
+  "LongDescription": "Import Essential or Protected flag if ot was in any not excluded mod and add it it last edit\n\nImportance of npc can be changed by any mod because some quest or added unique appearance",
+  "PreferredAutoVersioning": "Default",
+  "RequiredMods": [],
+  "TargetedReleases": []
+}
