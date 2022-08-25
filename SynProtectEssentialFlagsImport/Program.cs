@@ -31,8 +31,7 @@ namespace SynProtectEssentialFlagsImport
                 if (npcGetter.Configuration.Flags.HasFlag(FlagEssential)) continue; // skip if last edit have essential flag
 
                 // check both flags
-                var flags = new List<NpcConfiguration.Flag>(2) { FlagEssential, FlagProtected };
-                foreach(var flag in flags)
+                foreach(var flag in new NpcConfiguration.Flag[2] { FlagEssential, FlagProtected })
                 {
                     // skip if unchecked in Settings
                     if (!checkEssentialFlag && flag == FlagEssential) continue;
