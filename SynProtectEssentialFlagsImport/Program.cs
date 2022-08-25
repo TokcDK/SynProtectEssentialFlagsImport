@@ -30,9 +30,6 @@ namespace SynProtectEssentialFlagsImport
                 if (npcGetter == null) continue;
                 if (npcGetter.Configuration.Flags.HasFlag(FlagEssential)) continue; // skip if last edit have essential flag
 
-                // get all edits of the npc from installed mods
-                var modContexts = state.LinkCache.ResolveAllContexts<INpc, INpcGetter>(npcGetter.FormKey).ToList();
-
                 // check both flags
                 var flags = new List<NpcConfiguration.Flag>(2) { FlagEssential, FlagProtected };
                 foreach(var flag in flags)
@@ -45,7 +42,7 @@ namespace SynProtectEssentialFlagsImport
                     if (npcGetter.Configuration.Flags.HasFlag(flag)) continue; 
 
                     // check all npc edits for the flag contain
-                    foreach (var modContext in modContexts)
+                    foreach (var modContext in state.LinkCache.ResolveAllContexts<INpc, INpcGetter>(npcGetter.FormKey)) // check all edits of the npc
                     {
                         if (haveExcluded && excluded.Contains(modContext.ModKey.FileName)) continue;
                         if (!modContext.Record.Configuration.Flags.HasFlag(flag)) continue; // skip if npc record in the mod have no this flag
