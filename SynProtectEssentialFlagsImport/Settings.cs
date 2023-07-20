@@ -13,7 +13,7 @@ namespace SynProtectEssentialFlagsImport
         [SynthesisDescription("When enabled Protected flag will be checked for all edits of npc in enabled mods and imported if any found")]
         public bool CheckProtectedFlag { get; set; } = true;
         [SynthesisSettingName("Excluded mods list")]
-        [SynthesisTooltip("Add mods which you want to be excluded from checking")]
+        [SynthesisTooltip("Add mods which you want to be excluded from flag checking")]
         [SynthesisDescription("Any mod names here will be excluded form flag checking")]
         public List<string> ExcludedModsList { get; set; } = new List<string>()
         {
