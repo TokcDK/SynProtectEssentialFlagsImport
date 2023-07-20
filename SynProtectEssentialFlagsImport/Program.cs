@@ -22,8 +22,8 @@ namespace SynProtectEssentialFlagsImport
 
         public static void RunPatch(IPatcherState<ISkyrimMod, ISkyrimModGetter> state)
         {
-            var excluded = PatchSettings.Value.ExcludedModsList;
-            bool haveExcluded = excluded.Count > 0;
+            var excludedForFlagCheck = PatchSettings.Value.ExcludedModsList;
+            bool haveExcludedForFlagCheck = excludedForFlagCheck.Count > 0;
 
             bool checkEssentialFlag = PatchSettings.Value.CheckEssentialFlag;
             bool checkProtectedFlag = PatchSettings.Value.CheckProtectedFlag;
@@ -45,7 +45,7 @@ namespace SynProtectEssentialFlagsImport
                     // check all npc edits for the flag contain
                     foreach (var modContext in state.LinkCache.ResolveAllContexts<INpc, INpcGetter>(npcGetter.FormKey)) // check all edits of the npc
                     {
-                        if (haveExcluded && excluded.Contains(modContext.ModKey.FileName)) continue;
+                        if (haveExcludedForFlagCheck && excludedForFlagCheck.Contains(modContext.ModKey.FileName)) continue;
                         if (!modContext.Record.Configuration.Flags.HasFlag(flag)) continue; // skip if npc record in the mod have no this flag
 
                         Console.WriteLine($"Found '{flag}' flag for npc '{npcGetter.FormKey.ID}|{npcGetter.EditorID}' from mod '{modContext.ModKey.FileName}'");
