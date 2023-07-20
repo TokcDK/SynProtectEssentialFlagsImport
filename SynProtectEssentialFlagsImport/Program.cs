@@ -16,8 +16,10 @@ namespace SynProtectEssentialFlagsImport
                 .Run(args);
         }
 
-        static readonly NpcConfiguration.Flag FlagEssential = NpcConfiguration.Flag.Essential;
-        static readonly NpcConfiguration.Flag FlagProtected = NpcConfiguration.Flag.Protected;
+        static readonly NpcConfiguration.Flag _flagEssential = NpcConfiguration.Flag.Essential;
+        static readonly NpcConfiguration.Flag _flagProtected = NpcConfiguration.Flag.Protected;
+        static readonly NpcConfiguration.Flag[] _protectedEssentialFlags = new NpcConfiguration.Flag[2] { _flagEssential, _flagProtected };
+
         public static void RunPatch(IPatcherState<ISkyrimMod, ISkyrimModGetter> state)
         {
             var excluded = PatchSettings.Value.ExcludedModsList;
@@ -28,14 +30,14 @@ namespace SynProtectEssentialFlagsImport
             foreach (var npcGetter in state.LoadOrder.PriorityOrder.Npc().WinningOverrides())
             {
                 if (npcGetter == null) continue;
-                if (npcGetter.Configuration.Flags.HasFlag(FlagEssential)) continue; // skip if last edit have essential flag
+                if (npcGetter.Configuration.Flags.HasFlag(_flagEssential)) continue; // skip if last edit have essential flag
 
                 // check both flags
-                foreach(var flag in new NpcConfiguration.Flag[2] { FlagEssential, FlagProtected })
+                foreach(var flag in _protectedEssentialFlags)
                 {
                     // skip if unchecked in Settings
-                    if (!checkEssentialFlag && flag == FlagEssential) continue;
-                    if (!checkProtectedFlag && flag == FlagProtected) continue;
+                    if (!checkEssentialFlag && flag == _flagEssential) continue;
+                    if (!checkProtectedFlag && flag == _flagProtected) continue;
 
                     // skip if last edit of the npc contains the flag
                     if (npcGetter.Configuration.Flags.HasFlag(flag)) continue; 
