@@ -29,11 +29,12 @@ namespace SynProtectEssentialFlagsImport
             bool checkProtectedFlag = PatchSettings.Value.CheckProtectedFlag;
             foreach (var npcGetter in state.LoadOrder.PriorityOrder.Npc().WinningOverrides())
             {
-                if (npcGetter == null) continue;
-                if (npcGetter.Configuration.Flags.HasFlag(_flagEssential)) continue; // skip if last edit have essential flag
+                var npcGetterConfigurationFlags = npcGetter.Configuration.Flags;
+                if (npcGetterConfigurationFlags.HasFlag(_flagEssential)) continue; // skip if last edit have essential flag
+                if (!checkEssentialFlag && npcGetterConfigurationFlags.HasFlag(_flagProtected)) continue; // skip the record if not need to check essential and protected flag already added
 
                 // check both flags
-                foreach(var flag in _protectedEssentialFlags)
+                foreach (var flag in _protectedEssentialFlags)
                 {
                     // skip if unchecked in Settings
                     if (!checkEssentialFlag && flag == _flagEssential) continue;
