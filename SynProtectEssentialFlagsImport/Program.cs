@@ -66,7 +66,7 @@ namespace SynProtectEssentialFlagsImport
                     if (!npcModContext.Record.Configuration.Flags.HasFlag(flag)) continue; // skip if npc record in the mod have no this flag
 
                     // add flag, show console message and return
-                    Console.WriteLine($"Found '{flag}' flag for npc '{npcGetter.FormKey.ID}|{npcGetter.EditorID}' from mod '{npcModContext.ModKey.FileName}'");
+                    Console.WriteLine($"Found '{flag}' flag for npc '{npcGetter.FormKey.ID}|{npcGetter.EditorID}' which set by '{npcModContext.ModKey.FileName}' mod");
                     var npcToChange = state.PatchMod.Npcs.GetOrAddAsOverride(npcGetter);
 
                     npcToChange.Configuration.Flags |= flag; // add the flag
